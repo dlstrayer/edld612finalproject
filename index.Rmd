@@ -1,0 +1,233 @@
+---
+title: "Effects of Goal-Setting on Sustained Attention"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    theme: readable
+---
+
+```{r, include=TRUE, eval=TRUE}
+library(flexdashboard)
+library(knitr)
+library(rio)
+library(tidyverse)
+library(car)
+library(extrafont)
+library(colorblindr)
+library(ggpubr)
+library(cowplot)
+library(scales)
+library(zoo)
+library(here)
+library(tcltk)
+library(haven)
+library(ggrepel)
+library(gganimate)
+library(hrbrthemes)
+
+
+knitr::opts_chunk$set(fig.width=12, fig.height=9, fig.align = "center", message = FALSE, error = FALSE, warning = FALSE)
+#theme_set(theme_minimal(base_size = 15))
+#options(scipen=999)
+
+vis1data <- as.data.frame(read_sav("Data/vis1Data.sav"))
+vis2data <- as.data.frame(read_sav("Data/vis2Data.sav"))
+vis2data$condition <- as.numeric(vis2data$condition)
+vis2data2 <- as.data.frame(read_sav("Data/vis2Data2.sav"))
+vis3data <- read_sav("Data/vis3DataTEST.sav")
+```
+
+# Vis 1
+
+Column {data-width=400}
+-----------------------------------------------------------------------
+
+### Final Figure 1
+
+```{r vis 13, eval=TRUE}
+plot13 <- ggplot(data=vis1data, aes(x=Rank, y=mean, color= as.factor(condition), linetype=as.factor(condition), label=as.factor(condition))) +
+  geom_point(size=4) +
+  geom_line(aes(linetype=as.factor(condition), color=as.factor(condition)),size=2) +
+  theme_bw() +
+  labs(x = "Bin", 
+       y = "Response Time (in milliseconds)",
+       color="Condition", 
+       linetype="Condition", 
+       title="Goal-Setting Reduces Attention Lapses",
+       subtitle="Response Time Distribution on a 4-Choice Response Time Task",
+       caption="Note: Bin = response times rank-ordered smallest to largest (1 = fastest, 5 = slowest).
+       Subjects with non-specific goal were slower overall and had significantly longer slow RTs 
+       (shown in Bin 5; a measure of attention lapses)") +
+  scale_color_manual(name= "Condition", labels = c("No-Goal", "Goal"), values = c("#CC79A7","#56B4E9")) +
+  scale_linetype_manual(name="Condition", labels = c("No-Goal", "Goal"), values=c(1,4)) +
+  geom_label_repel(data = filter(vis1data, Rank==5), 
+                   aes(label = condition),
+                   nudge_x = -.6,
+                   segment.size  = 0.3,
+                   segment.color = "grey50",
+                   direction     = "x",
+                   na.rm = TRUE) +
+  theme_minimal() +
+  theme(legend.position="none",
+        axis.title=element_text(size=24,face="bold"),
+        axis.text=element_text(size=24),
+        title=element_text(size=24))
+plot13
+
+
+```
+
+> In the final version of visual #1, I have changed the line colors again to a colorblind friendly palette. I've also increased the size to make them easier to see. This final version also includes a title that I hope makes the purpose of the graph clear. I have also labeled the conditions within the graphic itself instead of a legend on the side. The names are more descriptive with 'non-specific goal' instead of 'control' and 'harder-over-time goal' instead of 'goal.' This graph was made for researchers, so a certain amount of confusion will probably be present when somebody not in the same field looks at it. But I think those studying attention lapses will be able to correctly interpret the findings.
+
+Column {data-width=400}
+-----------------------------------------------------------------------
+
+### Second Generation Figure 1
+
+```{r vis 12, eval=TRUE}
+plot12 <- ggplot(data=vis1data, aes(x=Rank, y=mean, color= as.factor(condition), linetype=as.factor(condition))) +
+  geom_point() +
+  geom_line(aes(linetype=as.factor(condition), color=as.factor(condition))) +
+  theme_bw() +
+  geom_errorbar(aes(ymin=mean-se, ymax=mean+se), width=.1) +
+  labs(x = "Bin", y = "Response Time (in milliseconds)",
+       color="Condition", linetype="Condition") +
+  scale_color_manual(name= "Condition", labels = c("Control", "Goal"), values = c("black", "dark green")) +
+  scale_linetype_manual(name="Condition", labels = c("Control", "Goal"), values=c(4,1)) +
+  theme(axis.text.x = element_text(size = 60))+
+  theme_minimal()
+plot12
+
+
+```
+
+> In a later version of visual #1, I have changed the lines so that one is solid and one is dashed to aid in accessability. I've also changed the colors. Here I'm also going back and forth on what to label the groups as to clarify what the different conditions were. Without any further context, it's hard to know what exactly 'control' and 'goal' mean. What kind of goal exactly?
+
+### First Generation Figure 1
+
+```{r vis 11, eval=TRUE}
+vis1data <- import(here("data","vis1data.sav"),setclass="tbl_df")
+
+plot11 <- ggplot(vis1data, aes(x=Rank, y=mean, color= as.factor(condition))) +
+  geom_point() +
+  geom_line(aes(color=as.factor(condition))) +
+  theme_bw() +
+  geom_errorbar(aes(ymin=mean-se, ymax=mean+se), width=.1) +
+  labs(x = "Bin", y = "Response Time (in milliseconds)",
+       color="Condition")
+plot11
+```
+
+> This is my first attempt at visual #1. It's a very simple output with several default options. I started with this just to make sure the data was cleaned properly and looked like it should. Moving forward, I wanted to focus on making the graph more accessible and aesthetic.
+
+
+# Vis 2
+
+Column {data-width=200}
+-----------------------------------------------------------------------
+
+### Final Visual 2
+```{r vis 23, eval=TRUE}
+
+plot23 <- ggplot(data=vis2data, aes(x=as.factor(condition), y=meanRT, color=as.factor(condition))) +
+  geom_jitter(width = 0.25, alpha = 0.5, size = 5) +
+  theme_bw() +
+  labs(x = "Condition", y = "Average Response Time (in milliseconds)",
+       color="Condition", linetype="Condition",
+       title="Goal-Setting Improves Task Performance",
+       subtitle="Average Response Times by Condition during 4-ChoiceRT") +
+  scale_x_discrete(labels=c("1" = "Non-specific Goal", "2" = "Harder-over-time Goal")) +
+  scale_color_manual(name= "Condition", labels = c("Control", "Goal"), values = c("#56B4E9", "#CC79A7")) +
+  scale_linetype_manual(name="Condition", labels = c("Control", "Goal"), values=c(4,1)) +
+  theme_minimal() +
+  geom_segment(data = filter(vis2data2, condition == 1), aes(x = 0.75, xend = 1.25, y = mean, yend = mean), linetype = "dashed", size = .75, color = "black") + 
+  geom_segment(data = filter(vis2data2, condition == 2), aes(x = 1.75, xend = 2.25, y = mean, yend = mean), linetype = "dashed", size = .75, color = "black") + 
+  theme(legend.position="none",
+        plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(face = "bold", hjust = 0.5),
+        axis.title=element_text(size=24,face="bold"),
+        axis.text=element_text(size=24),
+        title=element_text(size=24))
+plot23
+
+
+```
+
+> In the final version of visual #2, I have added in a descriptive title. I wanted the title to give the main takeaway that I wanted people to understand. I also simplified the graph by changing the condition labels and getting rid of the legend. I also changed the color scheme to a colordblind accessible one that matches my first visual so that there would be cohesiveness of the aesthetics between all the graphs. Additionally, I liked the having the mean line in the first try of visual #2, so I included a line for the mean in the jitterplot to help improve interpretation.
+
+Column {data-width=200}
+-----------------------------------------------------------------------
+
+### Second Generation Visual 2
+```{r vis 22, eval=TRUE, fig.width=4, fig.height=4}
+
+plot22 <- ggplot(data=vis2data, aes(x=as.factor(condition), y=meanRT, color=as.factor(condition))) +
+  geom_jitter() +
+  theme_bw() +
+  labs(x = "Bin", y = "Response Time (in milliseconds)",
+       color="Condition", linetype="Condition") +
+  scale_color_manual(name= "Condition", labels = c("Control", "Goal"), values = c("black", "dark green")) +
+  scale_linetype_manual(name="Condition", labels = c("Control", "Goal"), values=c(4,1)) +
+  theme_minimal()
+plot22
+
+```
+
+> A later version of visual #2 replaced the boxplot with a jitterplot to help show how many subject contribute to the results and how. I also changed the color to be by condition and more clearly labeled the conditions. Moving forward I want to make it a little more accessible and visually clear, while also including more descriptives.
+
+### First Generation Visual 2
+```{r vis 21, eval=TRUE, fig.width=4, fig.height=4}
+
+plot21 <- ggplot(data=vis2data, aes(x=as.factor(condition), y=meanRT)) +
+  geom_boxplot() +
+  theme_bw() +
+  labs(x = "Bin", y = "Response Time (in milliseconds)",
+       color="Condition", linetype="Condition") +
+  scale_color_manual(name= "Condition", labels = c("Control", "Goal"), values = c("black", "dark green")) +
+  scale_linetype_manual(name="Condition", labels = c("Control", "Goal"), values=c(4,1))
+plot21
+
+```
+
+> The first version of visual #2 was a very simple boxplot to help me get an idea of the spread and how I wanted to move forwarc visualizing it. You can see the mean lines and one outlier in the control condition (which also doesn't have a proper label yet), but it's hard to really get a sense of the spread and how individuals respond.
+
+# Vis 3
+
+Column {data-width=200}
+-----------------------------------------------------------------------
+
+### Final Visual 3
+```{r vis 33, eval=TRUE, fig.width=4, fig.height=4}
+
+gif_file('pupil by time bin 3.gif')
+#gifski_renderer(file = 'pupil by time bin.gif', loop = TRUE, width = NULL, height = NULL)
+
+```
+
+> In the final version of visual #3, I changed the color scheme to match the other 2 visuals. I feel like this is important within a project so that the imagery flows together nicely (especially within a paper or presentation). I think the animated format works well for this type of graph because the independent variable on the x-axis is time-based. So the animation really gives you the sense that the change in pupil diameter is happening over time. It also helps you visual how and when the conditions diverge in a more engaged way than a static graph.
+
+Column {data-width=200}
+-----------------------------------------------------------------------
+
+### Second Generation Visual 3
+```{r vis 32, eval=TRUE, fig.width=4, fig.height=4}
+
+
+gif_file('pupil by time bin 2.gif')
+
+
+```
+
+> In a later version of visual #3, I added in a descriptive title and and axis titles. I also changed the colors of the lines and made one of them dashed so it is easier to tell which condition is which.
+
+### First Generation Visual 3
+```{r vis 31, eval=TRUE, fig.width=4, fig.height=4}
+
+
+gif_file('pupil by time bin.gif')
+
+
+```
+
+> For visual #3, I wanted to challenge myself with something new by making an animated graph. I started off by getting my data in the correct format, which is different from how I would format it to plot under normal ggplot conditions. This first version is the output from the first iteration I got working. Now with a working model, I could move forward and improve the visualization.

@@ -56,7 +56,7 @@ plot13 <- ggplot(data=vis1data, aes(x=Rank, y=mean, color= as.factor(condition),
        linetype="Condition", 
        title="Goal-Setting Reduces Attention Lapses",
        subtitle="Response Time Distribution on a 4-Choice Response Time Task",
-       caption="Note: Bin = response times rank-ordered smallest to largest (1 = fastest, 5 = slowest).
+       caption="Note: Bin = response times rank-ordered smallest to largest within-subject and cut into 5 equal bins (1 = fastest, 5 = slowest).
        Subjects with non-specific goal were slower overall and had significantly longer slow RTs 
        (shown in Bin 5; a measure of attention lapses)") +
   scale_color_manual(name= "Condition", labels = c("No-Goal", "Goal"), values = c("#CC79A7","#56B4E9")) +

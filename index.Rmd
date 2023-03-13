@@ -195,7 +195,7 @@ plot11
 
 > This is my first attempt at visual #1. It's a very simple output with several default options. I started with this just to make sure the data was cleaned properly and looked like it should. Moving forward, I wanted to focus on making the graph more accessible and aesthetic.
 
-### How to interpret the variables
+### How to interpret the bin variable
 
 <span style="color: gray;">In Visual #1, we are looking at the response time distribution. This is because the response time distribution contains a mix of both focused trials and trials where attention lapses occur, which are reflected among the slowest response times. So within-participant, all their response times are ranked from fastest to slowest. Then, they are split into 5 equal bins (i.e. the 20% fastest trials are in bin 1, next 20% bin 2, and so on until the 20% slowest trials in bin 5). These bins are then averaged by condition. The visual shows both a main effect (meaning the HOT goal condition is faster overall) and an interaction in bin 5 (meaning that the HOT goal condition experienced fewer lapses in attention).</span>
 
@@ -323,3 +323,7 @@ gif_file('pupil by time bin.gif')
 ```
 
 > For visual #3, I wanted to challenge myself with something new by making an animated graph. I started off by getting my data in the correct format, which is different from how I would format it to plot under normal ggplot conditions. This first version is the output from the first iteration I got working. Now with a working model, I could move forward and improve the visualization.
+
+### How to interpret pupil variable
+
+<span style="color: gray;">In Visual #3, we are looking at changes in pupil diameter after target onset (i.e. the 'X' described under the Data Info tab). This measure is also called a phasic response. Phasic responses are a measure of attentional effort. A larger phasic response tends to correlate to higher mental effort. In visual #3, we see that those in the harder-over-time goal (HOT goal) condition display significantly larger phasics than those in the control condition.</span>

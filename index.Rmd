@@ -5,7 +5,6 @@ output:
     orientation: columns
     vertical_layout: fill
     theme: readable
-    logo: MAIDLab Logo.png
 ---
 
 ```{r, include=TRUE, eval=TRUE}
@@ -43,6 +42,12 @@ vis3data <- read_sav("Data/vis3DataTEST.sav")
 
 Row {data-width=400}
 -----------------------------------------------------------------------
+
+#### Memory, Attention, and Individual Differences Lab
+
+```{r picture, echo = F, out.width = '5%', fig.align="left"}
+knitr::include_graphics("MAIDLab Logo.png")
+```
 
 #### Purpose of Experiment
 

@@ -233,7 +233,7 @@ plot23
 Column {data-width=200}
 -----------------------------------------------------------------------
 
-### Second Generation Visual 2
+### Middle Generation Visual 2
 ```{r vis 22, eval=TRUE, fig.width=4, fig.height=4}
 
 plot22 <- ggplot(data=vis2data, aes(x=as.factor(condition), y=meanRT, color=as.factor(condition))) +

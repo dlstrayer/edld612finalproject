@@ -5,6 +5,7 @@ output:
     orientation: columns
     vertical_layout: fill
     theme: readable
+    logo: MAIDLab Logo.png
 ---
 
 ```{r, include=TRUE, eval=TRUE}

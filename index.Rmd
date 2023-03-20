@@ -5,6 +5,7 @@ output:
     orientation: columns
     vertical_layout: fill
     theme: readable
+    source_code: embed
 ---
 
 ```{r, include=TRUE, eval=TRUE}
@@ -59,7 +60,7 @@ knitr::include_graphics("MAIDLab Logo.png")
   
 #### 4-Choice Reaction Time Task Paradigm  
 
-  Participants completed a 4-choice reaction time task containing 180 trials that was programmed with E-Prime 2.0. Each trial starts on a grey screen with a 1-s fixation (+). Then, four dark-grey lines appear in a row at the center of the screen. After a random time interval (1-3 s in .250 second intervals), a dark_grey target (X)  appears above one of the lines. The participant’s objective is to press the key on the keyboard that corresponds to the location of the target (‘c’,’v’,’b’,’n’). After the participant’s response, they see a 1-s feedback screen showing whether their answer was correct or incorrect, with correct answers also displaying their reaction time. Pupil size data in being collected concurrently for each trial.
+  Participants completed a 4-choice reaction time task containing 180 trials that was programmed with E-Prime 2.0. Each trial starts on a grey screen with a 1-s fixation (+). Then, four dark-grey lines appear in a row at the center of the screen. After a random time interval (1-3 s in .250 second intervals), a dark_grey target (X)  appears above one of the lines. The participant’s objective is to press the key on the keyboard that corresponds to the location of the target (‘c’,’v’,’b’,’n’). After the participant’s response, they see a 1-s feedback screen showing whether their answer was correct or incorrect, with correct answers also displaying their reaction time. Pupil size data is being collected concurrently for each trial.
 
 #### Goal-Setting Instructions
 
@@ -75,7 +76,7 @@ It has been long-suggested in industrial-organizational psychology research that
 
 # Vis 1
 
-Row {data-width=300}
+Row {data-width=250}
 -----------------------------------------------------------------------
 
 ### Final Visual 1
@@ -119,10 +120,10 @@ plot14
 
 > This final version of visual #1 includes a title that I hope makes the purpose of the graph clear, even if you don't understand the specifics. I have also labeled the conditions within the graphic itself instead of a legend on the side. The names are more descriptive with 'non-specific goal' instead of 'control' and 'harder-over-time goal' instead of 'goal.' This graph was made for researchers, so a certain amount of confusion will probably be present when somebody not in the same field looks at it. But I think those studying attention lapses will be able to correctly interpret the findings.
 
-Column {data-width=175}
+Column {data-width=200, .tabset}
 -----------------------------------------------------------------------
 
-### Draft Generation Figure 1
+### Draft Generation Visual 1
 
 ```{r vis 13, eval=TRUE, fig.width=9, fig.height=6}
 plot13 <- ggplot(data=vis1data, aes(x=Rank, y=mean, color= as.factor(condition), linetype=as.factor(condition), label=as.factor(condition))) +
@@ -160,7 +161,7 @@ plot13
 
 > In the final version of visual #1, I have changed the line colors again to a colorblind friendly palette. I've also increased the size to make them easier to see. 
 
-### Second Generation Figure 1
+### Second Generation Visual 1
 
 ```{r vis 12, eval=TRUE, fig.width=4, fig.height=2}
 plot12 <- ggplot(data=vis1data, aes(x=Rank, y=mean, color= as.factor(condition), linetype=as.factor(condition))) +
@@ -181,10 +182,7 @@ plot12
 
 > In a later version of visual #1, I have changed the lines so that one is solid and one is dashed to aid in accessability. I've also changed the colors. Here I'm also going back and forth on what to label the groups as to clarify what the different conditions were. Without any further context, it's hard to know what exactly 'control' and 'goal' mean. What kind of goal exactly?
 
-Column {data-width=175}
------------------------------------------------------------------------
-
-### First Generation Figure 1
+### First Generation Visual 1
 
 ```{r vis 11, eval=TRUE, fig.width=7, fig.height=4}
 vis1data <- import(here("data","vis1data.sav"),setclass="tbl_df")
@@ -200,6 +198,10 @@ plot11
 ```
 
 > This is my first attempt at visual #1. It's a very simple output with several default options. I started with this just to make sure the data was cleaned properly and looked like it should. Moving forward, I wanted to focus on making the graph more accessible and aesthetic.
+
+
+Column {data-width=75}
+-----------------------------------------------------------------------
 
 ### How to interpret the bin variable
 
@@ -278,11 +280,11 @@ plot21
 
 # Vis 3
 
-Row {data-height=300}
+Row {data-height=200}
 -----------------------------------------------------------------------
 
 ### Final Visual 3
-```{r vis 34, eval=TRUE, fig.width=4, fig.height=4}
+```{r vis 34, eval=TRUE, fig.width=3.5, fig.height=3.5}
 
 gif_file('pupil by time bin 4.gif')
 #gifski_renderer(file = 'pupil by time bin.gif', loop = TRUE, width = NULL, height = NULL)
@@ -291,7 +293,7 @@ gif_file('pupil by time bin 4.gif')
 
 > In the final version of visual #3, I incorporated moving labels for the conditions. I also added a note so viewers know how much time the bins represent. I think the animated format works well for this type of graph because the independent variable on the x-axis is time-based. So the animation really gives you the sense that the change in pupil diameter is happening over time. It also helps you visualize how and when the conditions diverge in a more engaged way than a static graph.
 
-Column {data-width=200}
+Column {data-width=350, .tabset}
 -----------------------------------------------------------------------
 
 ### Draft Generation Visual 3
@@ -316,9 +318,6 @@ gif_file('pupil by time bin 2.gif')
 
 > In a later version of visual #3, I added in a descriptive title and and axis titles. I also changed the colors of the lines and made one of them dashed so it is easier to tell which condition is which.
 
-Column {data-width=200}
------------------------------------------------------------------------
-
 ### First Generation Visual 3
 ```{r vis 31, eval=TRUE, fig.width=4, fig.height=4}
 
@@ -329,6 +328,9 @@ gif_file('pupil by time bin.gif')
 ```
 
 > For visual #3, I wanted to challenge myself with something new by making an animated graph. I started off by getting my data in the correct format, which is different from how I would format it to plot under normal ggplot conditions. This first version is the output from the first iteration I got working. Now with a working model, I could move forward and improve the visualization.
+
+Column {data-width=175}
+-----------------------------------------------------------------------
 
 ### How to interpret pupil variable
 
